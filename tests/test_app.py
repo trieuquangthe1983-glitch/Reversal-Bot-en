@@ -124,7 +124,49 @@ class TestBuyerFlow:
                 "machine_id": mid,
             })
             assert r2.status_code == 400
-            assert "already used its trial" in r2.json()["detail"]
+            assert "no longer available" in r2.json()["detail"].lower() \
+                or "first license" in r2.json()["detail"].lower()
+
+    def test_trial_locked_after_paid_license(self, client):
+        """Trial must be the FIRST license. Once a paid tier is activated,
+        trial is permanently locked on that machine."""
+        mid = "abc123def456" + "0" * 12
+        # First: buy monthly
+        with patch("app.verify_bsc_payment",
+                   return_value=_mock_proof("monthly", tx="0x" + "f" * 64)):
+            r = client.post("/verify-payment", json={
+                "tx_hash": "0x" + "f" * 64, "tier": "monthly", "machine_id": mid,
+            })
+            assert r.status_code == 200
+        # Now try trial on same machine
+        with patch("app.verify_bsc_payment",
+                   return_value=_mock_proof("trial", tx="0x" + "e" * 64)):
+            r = client.post("/verify-payment", json={
+                "tx_hash": "0x" + "e" * 64, "tier": "trial", "machine_id": mid,
+            })
+            assert r.status_code == 400
+            assert "first license" in r.json()["detail"].lower() \
+                or "no longer available" in r.json()["detail"].lower()
+
+    def test_trial_eligible_endpoint(self, client):
+        """/trial-eligible/<mid> reports True for fresh machine."""
+        mid = "fresh" + "0" * 19
+        r = client.get(f"/trial-eligible/{mid}")
+        assert r.status_code == 200
+        assert r.json()["trial_eligible"] is True
+
+    def test_trial_eligible_false_after_any_license(self, client):
+        mid = "abc123def456" + "0" * 12
+        with patch("app.verify_bsc_payment",
+                   return_value=_mock_proof("annual", tx="0x" + "d" * 64)):
+            client.post("/verify-payment", json={
+                "tx_hash": "0x" + "d" * 64, "tier": "annual", "machine_id": mid,
+            })
+        r = client.get(f"/trial-eligible/{mid}")
+        assert r.status_code == 200
+        assert r.json()["trial_eligible"] is False
+        assert "active annual" in r.json()["reason"].lower() \
+            or "prior license" in r.json()["reason"].lower()
 
     def test_activate_wrong_machine_rejected(self, client):
         with patch("app.verify_bsc_payment", return_value=_mock_proof("monthly")):

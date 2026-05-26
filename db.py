@@ -181,10 +181,22 @@ class LicenseRepo:
 
     @staticmethod
     def has_used_trial(machine_id: str) -> bool:
+        """Legacy: True iff this machine has ever had a trial license."""
         return get_db().execute(
             "SELECT 1 FROM licenses WHERE machine_id = ? AND tier = 'trial' LIMIT 1",
             (machine_id.lower(),),
         ).fetchone() is not None
+
+    @staticmethod
+    def is_trial_eligible(machine_id: str) -> bool:
+        """Trial-must-be-first rule: a machine can claim the $29 trial ONLY
+        if it has NO license history of any tier. The moment it activates a
+        paid tier (monthly/quarterly/annual/lifetime), trial is permanently
+        unavailable on that machine."""
+        return get_db().execute(
+            "SELECT 1 FROM licenses WHERE machine_id = ? LIMIT 1",
+            (machine_id.lower(),),
+        ).fetchone() is None
 
     @staticmethod
     def revoke(license_id: int, reason: str) -> None:

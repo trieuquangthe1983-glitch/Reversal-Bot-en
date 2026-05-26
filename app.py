@@ -205,6 +205,26 @@ def public_key():
     return {"public_key_pem": public_key_pem()}
 
 
+@app.get("/trial-eligible/{machine_id}")
+def trial_eligible(machine_id: str):
+    """Returns whether the given machine can claim the $29 trial.
+    True iff this machine has NO license history of any tier."""
+    mid = machine_id[:24].lower()
+    eligible = LicenseRepo.is_trial_eligible(mid)
+    reason = None
+    if not eligible:
+        existing = LicenseRepo.get_active_for_machine(mid)
+        if existing:
+            reason = f"this machine has an active {existing['tier']} license"
+        else:
+            reason = "this machine has prior license history; trial is only for new machines"
+    return {
+        "machine_id": mid,
+        "trial_eligible": eligible,
+        "reason": reason,
+    }
+
+
 # ---------------------------------------------------------------------------
 # Buyer flow
 # ---------------------------------------------------------------------------
@@ -262,14 +282,18 @@ def verify_payment(payload: VerifyPaymentIn, request: Request):
             "this transaction has already been used to mint a license token. "
             "If this is wrong, contact dht.io.vn@gmail.com.")
 
-    # 3. trial one-shot
-    if payload.tier == "trial" and LicenseRepo.has_used_trial(machine_id):
+    # 3. Trial-must-be-first rule: trial only available if this machine has
+    # NO license history of any tier. Once a paid tier is activated, trial
+    # is locked forever on this machine (anti-abuse, per business rule).
+    if payload.tier == "trial" and not LicenseRepo.is_trial_eligible(machine_id):
         ActivationAttemptRepo.record(
             ip=ip, machine_id=machine_id, endpoint="verify-payment",
             tx_hash=payload.tx_hash, success=False,
-            error_reason="trial_already_used")
+            error_reason="trial_not_eligible")
         raise HTTPException(400,
-            "this machine has already used its trial. Choose a paid tier.")
+            "Trial is no longer available on this machine — it can only be "
+            "used as your FIRST license. Choose a paid tier (monthly/quarterly/"
+            "annual/lifetime) or contact dht.io.vn@gmail.com.")
 
     if not existing:
         PaymentProofRepo.record(
