@@ -1,0 +1,37 @@
+# Fly.io deployment config.
+# Run:  fly launch --copy-config --no-deploy
+#       fly secrets set MASTER_PRIVATE_KEY="$(cat state/master_private.pem)"
+#       fly secrets set LICENSE_ADMIN_TOKEN="$(openssl rand -hex 32)"
+#       fly volumes create license_data --region sin --size 1
+#       fly deploy
+
+app = "reversal-bot-license"   # change to your unique app name
+primary_region = "sin"          # Singapore, low latency from VN
+
+[build]
+  dockerfile = "Dockerfile"
+
+[http_service]
+  internal_port = 8090
+  force_https = true
+  auto_stop_machines = false   # keep alive so heartbeats stay reachable
+  auto_start_machines = true
+  min_machines_running = 1
+
+[[http_service.checks]]
+  path = "/health"
+  protocol = "http"
+  interval = "30s"
+  timeout = "5s"
+
+[mounts]
+  source = "license_data"
+  destination = "/data"
+
+[env]
+  LICENSE_STATE_DIR = "/data/state"
+  LICENSE_DB_PATH = "/data/state/licenses.db"
+
+[[services.ports]]
+  handlers = ["http", "tls"]
+  port = 443

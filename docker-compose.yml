@@ -1,0 +1,20 @@
+# Local docker-compose for testing the server before deploying.
+# Run:  docker compose up --build
+# State persists in ./state/  on host.
+version: "3.9"
+
+services:
+  license-server:
+    build: .
+    ports:
+      - "8090:8090"
+    environment:
+      - LICENSE_STATE_DIR=/data/state
+      - LICENSE_DB_PATH=/data/state/licenses.db
+      - MASTER_PRIVATE_KEY_PATH=/data/state/master_private.pem
+      - LICENSE_PAYMENT_WALLET=0xFdE5bE00bA5db63a93abf7922ee831dB62257550
+      # Set this to a long random string in production!
+      - LICENSE_ADMIN_TOKEN=${LICENSE_ADMIN_TOKEN:-change-me-please}
+    volumes:
+      - ./state:/data/state
+    restart: unless-stopped
