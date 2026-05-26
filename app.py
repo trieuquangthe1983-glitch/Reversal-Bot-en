@@ -27,6 +27,9 @@ from pydantic import BaseModel
 from blockchain import (PAYMENT_WALLET_ADDRESS, MIN_CONFIRMATIONS,
                        USDT_BEP20_CONTRACT, PaymentVerifyError,
                        verify_bsc_payment)
+from tron import (PAYMENT_WALLET_TRON, USDT_TRC20_BASE58,
+                 MIN_CONFIRMATIONS as TRON_MIN_CONFIRMATIONS,
+                 TronPaymentVerifyError, verify_tron_payment)
 from crypto import (LicenseTokenError, peek_token, public_key_pem,
                    sign_license, verify_license)
 from db import (ActivationAttemptRepo, LicenseRepo, PaymentProofRepo,
@@ -97,6 +100,7 @@ class VerifyPaymentIn(BaseModel):
     tx_hash: str
     tier: str
     machine_id: str
+    network: str = "bsc"      # "bsc" or "tron"
     customer_email: Optional[str] = None
 
 
@@ -151,6 +155,7 @@ def pricing():
             }
             for t in TIERS.values()
         ],
+        # Back-compat: legacy bots read .payment.{network,wallet,...}
         "payment": {
             "network": "BSC (BEP20)",
             "token": "USDT",
@@ -158,6 +163,37 @@ def pricing():
             "usdt_contract": USDT_BEP20_CONTRACT,
             "min_confirmations": MIN_CONFIRMATIONS,
         },
+        # New: list of supported networks. Bots ≥ v2 read .networks
+        "networks": [
+            {
+                "id": "bsc",
+                "label": "BSC (BNB Smart Chain)",
+                "token": "USDT-BEP20",
+                "wallet": PAYMENT_WALLET_ADDRESS,
+                "token_contract": USDT_BEP20_CONTRACT,
+                "min_confirmations": MIN_CONFIRMATIONS,
+                "explorer": "https://bscscan.com/tx/",
+                "decimals": 18,
+                "native_fee_token": "BNB",
+            },
+            {
+                "id": "tron",
+                "label": "Tron (TRC20)",
+                "token": "USDT-TRC20",
+                "wallet": PAYMENT_WALLET_TRON,
+                "token_contract": USDT_TRC20_BASE58,
+                "min_confirmations": TRON_MIN_CONFIRMATIONS,
+                "explorer": "https://tronscan.org/#/transaction/",
+                "decimals": 6,
+                "native_fee_token": "TRX",
+            },
+        ],
+        "fee_policy": (
+            "Buyer pays network fees in the native token "
+            "(BNB on BSC, TRX on Tron). The USDT amount transferred must "
+            "exactly match the tier price. Do NOT use exchange withdrawals "
+            "that deduct fees from the transfer amount."
+        ),
         "support_email": "dht.io.vn@gmail.com",
     }
 
@@ -183,15 +219,36 @@ def verify_payment(payload: VerifyPaymentIn, request: Request):
     if len(machine_id) < 12:
         raise HTTPException(400, "machine_id too short (need >= 12 hex chars)")
 
-    # 1. On-chain verify
+    network = (payload.network or "bsc").lower()
+    if network not in ("bsc", "tron"):
+        raise HTTPException(400, f"unsupported network: {network}")
+
+    # 1. On-chain verify (dispatch by network)
     try:
-        proof = verify_bsc_payment(payload.tx_hash.strip(),
-                                   expected_tier=payload.tier)
-    except PaymentVerifyError as e:
+        if network == "tron":
+            tron_proof = verify_tron_payment(payload.tx_hash.strip(),
+                                             expected_tier=payload.tier)
+            # Normalize to the BSC PaymentProof shape so downstream code
+            # doesn't care which chain provided the proof.
+            from blockchain import PaymentProof
+            proof = PaymentProof(
+                tx_hash=tron_proof.tx_hash,
+                from_address=tron_proof.from_address,
+                to_address=tron_proof.to_address,
+                amount_usdt=tron_proof.amount_usdt,
+                block_number=tron_proof.block_number,
+                confirmations=tron_proof.confirmations,
+                matched_tier=tron_proof.matched_tier,
+                raw_receipt=tron_proof.raw_info,
+            )
+        else:
+            proof = verify_bsc_payment(payload.tx_hash.strip(),
+                                       expected_tier=payload.tier)
+    except (PaymentVerifyError, TronPaymentVerifyError) as e:
         ActivationAttemptRepo.record(
             ip=ip, machine_id=machine_id, endpoint="verify-payment",
             tx_hash=payload.tx_hash, success=False,
-            error_reason=f"verify_failed:{e}")
+            error_reason=f"verify_failed[{network}]:{e}")
         raise HTTPException(400, str(e))
 
     # 2. tx uniqueness

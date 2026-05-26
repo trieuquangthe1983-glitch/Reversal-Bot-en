@@ -30,7 +30,17 @@ TIERS: dict[TierName, Tier] = {
 }
 
 
-def match_tier_by_amount(amount_usdt: float, tolerance: float = 0.5) -> Tier | None:
+def match_tier_by_amount(amount_usdt: float, tolerance: float = 0.05) -> Tier | None:
+    """Match a payment amount to a tier within `tolerance` USDT.
+
+    Tolerance is intentionally tight (5 cents) because buyers are required
+    to pay network fees in the native token (BNB on BSC, TRX on Tron) —
+    the USDT amount transferred should match the tier price EXACTLY.
+
+    If a buyer accidentally uses Binance withdrawal with "deduct fee from
+    amount", the recipient gets less than expected and this matcher returns
+    None — they need to email support for manual reconciliation.
+    """
     for t in TIERS.values():
         if abs(amount_usdt - t.price_usdt) <= tolerance:
             return t
