@@ -119,6 +119,37 @@ class HeartbeatIn(BaseModel):
 # Public endpoints
 # ---------------------------------------------------------------------------
 _LANDING_PATH = Path(__file__).parent / "landing.html"
+_DOWNLOADS_DIR = Path(__file__).parent / "downloads"
+CURRENT_VERSION = "1.0.0"
+
+
+@app.get("/download")
+@app.get("/download/{version}")
+def download(version: str = CURRENT_VERSION):
+    """Serve the bot ZIP for customer download.
+
+    Usage:
+      /download              -> serves current version (CURRENT_VERSION above)
+      /download/1.0.0        -> serves a specific version
+
+    The Content-Disposition: attachment header forces browser to save
+    (instead of trying to display the binary)."""
+    # Basic safety: reject path traversal attempts
+    if "/" in version or "\\" in version or ".." in version:
+        raise HTTPException(400, "invalid version")
+    zip_path = _DOWNLOADS_DIR / f"ReversalBot-v{version}.zip"
+    if not zip_path.exists():
+        raise HTTPException(404,
+            f"version {version} not available. Try /download for the current "
+            f"version, or email dht.io.vn@gmail.com.")
+    # Lightweight log so we can see downloads in fly logs
+    log_msg = f"[download] v{version} served ({zip_path.stat().st_size} bytes)"
+    print(log_msg)
+    return FileResponse(
+        zip_path,
+        media_type="application/zip",
+        filename=f"ReversalBot-v{version}.zip",
+    )
 
 
 @app.get("/")
