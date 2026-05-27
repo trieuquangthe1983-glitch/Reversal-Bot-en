@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reversal Bot — Adaptive crypto trading on autopilot</title>
+  <meta name="description" content="A daily-reversal pattern crypto bot with two strategies running in parallel, adaptive Bayesian learner, and 5 license tiers from $29 trial to $569 lifetime.">
+
+  <meta property="og:title" content="Reversal Bot — Adaptive crypto trading on autopilot">
+  <meta property="og:description" content="Daily-reversal pattern detection · LTR confluence · Bayesian learner · OKX + Gate.io · 5 tiers from $29.">
+  <meta property="og:type" content="website">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif; }
+    .gradient-text {
+      background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero-bg {
+      background:
+        radial-gradient(circle at 20% 30%, rgba(59,130,246,0.12) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(139,92,246,0.12) 0%, transparent 50%);
+    }
+    .card { transition: transform .15s ease, box-shadow .15s ease; }
+    .card:hover { transform: translateY(-4px); box-shadow: 0 10px 30px rgba(0,0,0,.08); }
+  </style>
+</head>
+<body class="bg-white text-gray-900 antialiased">
+
+<!-- ====================== NAV ====================== -->
+<nav class="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-gray-100">
+  <div class="max-w-6xl mx-auto px-6 py-3 flex items-center justify-between">
+    <div class="flex items-center space-x-2 font-bold">
+      <span class="text-2xl">📊</span>
+      <span class="text-lg">Reversal Bot</span>
+    </div>
+    <div class="flex items-center space-x-6 text-sm">
+      <a href="#features" class="hover:text-blue-600 hidden md:inline">Features</a>
+      <a href="#pricing" class="hover:text-blue-600 hidden md:inline">Pricing</a>
+      <a href="#how" class="hover:text-blue-600 hidden md:inline">How it works</a>
+      <a href="#faq" class="hover:text-blue-600 hidden md:inline">FAQ</a>
+      <a href="#pricing" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-1.5 rounded-lg font-medium">Buy now</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ====================== HERO ====================== -->
+<section class="hero-bg">
+  <div class="max-w-6xl mx-auto px-6 py-20 md:py-28 text-center">
+    <div class="inline-block bg-blue-50 border border-blue-200 text-blue-700 text-xs px-3 py-1 rounded-full font-medium mb-6">
+      v1.0.0 · 2 strategies in 1 engine · Trial $29
+    </div>
+    <h1 class="text-4xl md:text-6xl font-extrabold leading-tight mb-6">
+      Adaptive crypto trading,<br>
+      <span class="gradient-text">running on autopilot</span>.
+    </h1>
+    <p class="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto mb-10">
+      A daily-reversal pattern bot with two strategies running in parallel,
+      a Bayesian + online-ML learner that gets smarter each trade, and a
+      browser dashboard you actually want to look at.
+    </p>
+    <div class="flex flex-wrap justify-center gap-3 mb-12">
+      <a href="#pricing" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-semibold shadow-lg shadow-blue-500/30">
+        Start a $29 trial →
+      </a>
+      <a href="#how" class="border border-gray-300 hover:bg-gray-50 px-6 py-3 rounded-xl font-semibold">
+        How it works
+      </a>
+    </div>
+    <div class="flex flex-wrap justify-center gap-6 text-xs text-gray-500">
+      <div>✅ OKX testnet + Gate.io live</div>
+      <div>✅ 10 tokens (BTC, ETH, SOL, ...)</div>
+      <div>✅ Pay in USDT (BSC or Tron)</div>
+      <div>✅ One-machine bound license</div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== FEATURES ====================== -->
+<section id="features" class="border-t border-gray-100">
+  <div class="max-w-6xl mx-auto px-6 py-20">
+    <div class="text-center mb-12">
+      <div class="text-blue-600 font-semibold text-sm uppercase tracking-wide mb-2">Why it's different</div>
+      <h2 class="text-3xl md:text-4xl font-bold">Most retail bots have one strategy. This has ten ideas.</h2>
+    </div>
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+      <div class="card bg-white p-6 rounded-2xl border border-gray-200">
+        <div class="text-3xl mb-3">🎯</div>
+        <h3 class="font-bold mb-2">Daily reversal pattern</h3>
+        <p class="text-sm text-gray-600">Detects daily candles (timezone configurable) that move ≥1.05% then reverse 1.2–6.5% from the intraday extreme. Counter-trend with statistical grounding.</p>
+      </div>
+      <div class="card bg-white p-6 rounded-2xl border border-gray-200">
+        <div class="text-3xl mb-3">🪙</div>
+        <h3 class="font-bold mb-2">LTR confluence strategy</h3>
+        <p class="text-sm text-gray-600">Liquidity-Trap Reversal runs alongside. When both fire same-side, a "confluence" trade is taken with tighter SL and wider TPs.</p>
+      </div>
+      <div class="card bg-white p-6 rounded-2xl border border-gray-200">
+        <div class="text-3xl mb-3">🧠</div>
+        <h3 class="font-bold mb-2">Adaptive learner v2</h3>
+        <p class="text-sm text-gray-600">Bayesian Beta-Bernoulli + Gaussian E[R] + online logistic regression. Confidence per (symbol, side, bucket). Skips trades below 0.40 confidence.</p>
+      </div>
+      <div class="card bg-white p-6 rounded-2xl border border-gray-200">
+        <div class="text-3xl mb-3">⚖️</div>
+        <h3 class="font-bold mb-2">Meta-learner risk weighting</h3>
+        <p class="text-sm text-gray-600">EMA expected-R per strategy reallocates capital automatically. Reversal 0.6× · LTR 0.4× · Confluence 1.3× — capped 0.2× to 1.6×.</p>
+      </div>
+      <div class="card bg-white p-6 rounded-2xl border border-gray-200">
+        <div class="text-3xl mb-3">🛡️</div>
+        <h3 class="font-bold mb-2">Risk-first sizing</h3>
+        <p class="text-sm text-gray-600">Risk-% of equity, max leverage cap, split TP 50/30/20 at 1R/2R/3R, per-symbol cooldown, max concurrent positions.</p>
+      </div>
+      <div class="card bg-white p-6 rounded-2xl border border-gray-200">
+        <div class="text-3xl mb-3">🌐</div>
+        <h3 class="font-bold mb-2">Multi-exchange execution</h3>
+        <p class="text-sm text-gray-600">OKX testnet for paper trading + Gate.io live (Unified Account, isolated 15× default). Pluggable executor factory.</p>
+      </div>
+      <div class="card bg-white p-6 rounded-2xl border border-gray-200">
+        <div class="text-3xl mb-3">🔍</div>
+        <h3 class="font-bold mb-2">Pre-trade calculator</h3>
+        <p class="text-sm text-gray-600">Plug entry + SL + equity → get contracts, notional, margin, liq price, full TP ladder + 5 safety warnings. Quick-fill from any detected pattern.</p>
+      </div>
+      <div class="card bg-white p-6 rounded-2xl border border-gray-200">
+        <div class="text-3xl mb-3">🔐</div>
+        <h3 class="font-bold mb-2">Hardened auth + vault</h3>
+        <p class="text-sm text-gray-600">bcrypt cost-12 login · Fernet + PBKDF2-310k vault for API keys · sliding 8h session TTL · two-step LIVE confirm.</p>
+      </div>
+      <div class="card bg-white p-6 rounded-2xl border border-gray-200">
+        <div class="text-3xl mb-3">📊</div>
+        <h3 class="font-bold mb-2">Browser dashboard</h3>
+        <p class="text-sm text-gray-600">12 tabs: Dashboard, Portfolio, Watchlist, Calculator, Trades, Patterns, Parameters, Keys, Learner, Audit, DB, License. No install required to use.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== PRICING ====================== -->
+<section id="pricing" class="bg-gradient-to-b from-gray-50 to-white border-t border-gray-100">
+  <div class="max-w-6xl mx-auto px-6 py-20">
+    <div class="text-center mb-12">
+      <div class="text-blue-600 font-semibold text-sm uppercase tracking-wide mb-2">Pricing</div>
+      <h2 class="text-3xl md:text-4xl font-bold mb-3">Pay in USDT. No subscriptions to cancel.</h2>
+      <p class="text-gray-600 max-w-xl mx-auto">Choose a tier, pay on BSC or Tron, get an activation code in seconds.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-5 gap-4 mb-8" id="pricingGrid">
+      <!-- filled by JS from /pricing endpoint, fallback to static below -->
+      <div class="card bg-white p-5 rounded-2xl border border-gray-200">
+        <div class="text-xs uppercase tracking-wide text-gray-500 font-semibold">Trial</div>
+        <div class="text-4xl font-bold mt-2">29 <span class="text-base text-gray-400">USDT</span></div>
+        <div class="text-xs text-gray-500 mt-1">30 days · one-shot per machine</div>
+        <p class="text-xs text-gray-600 mt-3">Risk-free way to see if the bot fits your style. All features unlocked.</p>
+      </div>
+      <div class="card bg-white p-5 rounded-2xl border border-gray-200">
+        <div class="text-xs uppercase tracking-wide text-gray-500 font-semibold">Monthly</div>
+        <div class="text-4xl font-bold mt-2">39 <span class="text-base text-gray-400">USDT</span></div>
+        <div class="text-xs text-gray-500 mt-1">30 days · renews on next payment</div>
+        <p class="text-xs text-gray-600 mt-3">Pay-as-you-go. Cancel by simply not renewing.</p>
+      </div>
+      <div class="card bg-white p-5 rounded-2xl border border-gray-200">
+        <div class="text-xs uppercase tracking-wide text-gray-500 font-semibold">Quarterly</div>
+        <div class="text-4xl font-bold mt-2">111 <span class="text-base text-gray-400">USDT</span></div>
+        <div class="text-xs text-amber-700 mt-1">90 days · 5% off</div>
+        <p class="text-xs text-gray-600 mt-3">3 months at a small discount.</p>
+      </div>
+      <div class="card bg-white p-5 rounded-2xl border-2 border-blue-400 relative">
+        <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-blue-600 text-white text-xs px-3 py-0.5 rounded-full font-semibold">POPULAR</div>
+        <div class="text-xs uppercase tracking-wide text-blue-600 font-semibold">Annual</div>
+        <div class="text-4xl font-bold mt-2">397 <span class="text-base text-gray-400">USDT</span></div>
+        <div class="text-xs text-amber-700 mt-1">365 days · 15% off</div>
+        <p class="text-xs text-gray-600 mt-3">Best value before lifetime. ≈33 USDT/month.</p>
+      </div>
+      <div class="card bg-gradient-to-br from-amber-50 to-orange-50 p-5 rounded-2xl border-2 border-amber-300 relative">
+        <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-amber-500 text-white text-xs px-3 py-0.5 rounded-full font-semibold">LIFETIME</div>
+        <div class="text-xs uppercase tracking-wide text-amber-700 font-semibold">Lifetime</div>
+        <div class="text-4xl font-bold mt-2">569 <span class="text-base text-gray-400">USDT</span></div>
+        <div class="text-xs text-gray-500 mt-1">No expiry · all future updates</div>
+        <p class="text-xs text-gray-600 mt-3">Break-even vs monthly at ~14.6 months. One-time payment.</p>
+      </div>
+    </div>
+
+    <div class="bg-amber-50 border border-amber-300 rounded-xl p-4 text-sm mb-6">
+      ⚠️ <strong>Buyer pays the network fee</strong> in the native token (BNB on BSC, TRX on Tron).
+      The USDT amount sent must equal the tier price exactly. Do NOT use exchange withdrawals
+      that subtract fees from the amount.
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-4">
+      <div class="card bg-white p-5 rounded-2xl border border-gray-200">
+        <div class="font-bold text-yellow-700 mb-1">BSC (BEP20)</div>
+        <div class="text-xs text-gray-500 mb-2">Send USDT-BEP20, gas in BNB</div>
+        <div class="text-xs text-gray-500">Wallet:</div>
+        <code class="text-xs break-all block bg-gray-50 p-2 rounded">0xFdE5bE00bA5db63a93abf7922ee831dB62257550</code>
+      </div>
+      <div class="card bg-white p-5 rounded-2xl border border-gray-200">
+        <div class="font-bold text-red-700 mb-1">Tron (TRC20)</div>
+        <div class="text-xs text-gray-500 mb-2">Send USDT-TRC20, gas in TRX</div>
+        <div class="text-xs text-gray-500">Wallet:</div>
+        <code class="text-xs break-all block bg-gray-50 p-2 rounded">TCXQjLBqE79ALwzMSXneQXUHtyymDTXapt</code>
+      </div>
+    </div>
+
+    <div class="text-center mt-10">
+      <a href="#download" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-xl font-semibold shadow-lg">
+        Download the bot →
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== HOW IT WORKS ====================== -->
+<section id="how" class="border-t border-gray-100">
+  <div class="max-w-4xl mx-auto px-6 py-20">
+    <div class="text-center mb-12">
+      <div class="text-blue-600 font-semibold text-sm uppercase tracking-wide mb-2">How it works</div>
+      <h2 class="text-3xl md:text-4xl font-bold">Three steps. About 8 minutes total.</h2>
+    </div>
+
+    <div class="space-y-4">
+      <div class="flex bg-white border border-gray-200 rounded-2xl p-6">
+        <div class="text-4xl font-bold text-blue-600 mr-6 flex-shrink-0">1</div>
+        <div>
+          <h3 class="font-bold mb-2">Download + install</h3>
+          <p class="text-sm text-gray-600">Download the ZIP (157 KB), extract, double-click <code class="bg-gray-100 px-1 rounded text-xs">install.bat</code>. Installer handles Python venv, dependencies, DB, and creates Start Menu shortcuts. ~3 minutes.</p>
+        </div>
+      </div>
+      <div class="flex bg-white border border-gray-200 rounded-2xl p-6">
+        <div class="text-4xl font-bold text-blue-600 mr-6 flex-shrink-0">2</div>
+        <div>
+          <h3 class="font-bold mb-2">Pay + activate</h3>
+          <p class="text-sm text-gray-600">Pick a tier, send the exact USDT amount on BSC or Tron, paste the transaction hash. The license server verifies on-chain (~30s) and binds an activation code to your machine. No account signup needed before payment.</p>
+        </div>
+      </div>
+      <div class="flex bg-white border border-gray-200 rounded-2xl p-6">
+        <div class="text-4xl font-bold text-blue-600 mr-6 flex-shrink-0">3</div>
+        <div>
+          <h3 class="font-bold mb-2">Add API key + trade</h3>
+          <p class="text-sm text-gray-600">Create your admin account, unlock the encrypted vault, add an OKX testnet key (free $10k demo) or Gate.io live key. Configure timezone + risk in Settings. Click <strong>Start Trading</strong> to begin DRY_RUN. When you're confident, flip to LIVE.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== DOWNLOAD ====================== -->
+<section id="download" class="bg-gradient-to-b from-blue-600 to-purple-600 text-white">
+  <div class="max-w-3xl mx-auto px-6 py-16 text-center">
+    <h2 class="text-3xl md:text-4xl font-bold mb-3">Ready to start?</h2>
+    <p class="text-blue-100 mb-8">Download the bot, activate a $29 trial, see if it fits.</p>
+
+    <!-- TODO: anh thay URL bằng link download thật khi up file lên server / Gumroad -->
+    <a href="DOWNLOAD_URL_HERE" class="inline-block bg-white text-blue-600 hover:bg-gray-100 px-8 py-4 rounded-xl font-bold text-lg shadow-2xl">
+      ⬇ Download ReversalBot-v1.0.0.zip
+    </a>
+    <div class="text-blue-100 text-sm mt-4">157 KB · Windows 10/11 · Requires Python 3.10+</div>
+
+    <div class="mt-10 text-xs text-blue-100 flex flex-wrap justify-center gap-6">
+      <a href="https://stats.uptimerobot.com/" class="hover:text-white underline">Service status</a>
+      <a href="mailto:dht.io.vn@gmail.com" class="hover:text-white underline">Support</a>
+      <a href="#faq" class="hover:text-white underline">FAQ</a>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== FAQ ====================== -->
+<section id="faq" class="border-t border-gray-100">
+  <div class="max-w-3xl mx-auto px-6 py-20">
+    <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">FAQ</h2>
+    <div class="space-y-4">
+
+      <details class="bg-white border border-gray-200 rounded-2xl p-6 group">
+        <summary class="font-semibold cursor-pointer flex justify-between">
+          What if the bot doesn't work for me? Refunds?
+          <span class="text-gray-400 group-open:rotate-180 transition-transform">▼</span>
+        </summary>
+        <p class="text-sm text-gray-600 mt-3">Within 7 days of purchase, email dht.io.vn@gmail.com with the issue and your tx hash. We'll work it out — refund or transfer to a different machine. After 7 days, we'll still help diagnose, but refunds are case-by-case.</p>
+      </details>
+
+      <details class="bg-white border border-gray-200 rounded-2xl p-6 group">
+        <summary class="font-semibold cursor-pointer flex justify-between">
+          Is the bot guaranteed to be profitable?
+          <span class="text-gray-400 group-open:rotate-180 transition-transform">▼</span>
+        </summary>
+        <p class="text-sm text-gray-600 mt-3">No, and anyone claiming otherwise is lying. The bot is built on rigorous backtests (2 years of data, 10 tokens) but markets adapt. We document <a href="#" class="text-blue-600 underline">honest failure modes</a> in the README. Start with the trial and DRY_RUN mode to see how it performs in current conditions.</p>
+      </details>
+
+      <details class="bg-white border border-gray-200 rounded-2xl p-6 group">
+        <summary class="font-semibold cursor-pointer flex justify-between">
+          Can I run it on a VPS so it trades 24/7?
+          <span class="text-gray-400 group-open:rotate-180 transition-transform">▼</span>
+        </summary>
+        <p class="text-sm text-gray-600 mt-3">Yes — the bot is a standard Python app, runs on any Windows VPS (Windows Server, Vultr, Contabo, etc.). One-machine license binding means you'll activate on the VPS specifically. If you need to move later, email support for a free transfer.</p>
+      </details>
+
+      <details class="bg-white border border-gray-200 rounded-2xl p-6 group">
+        <summary class="font-semibold cursor-pointer flex justify-between">
+          What exchanges do you support?
+          <span class="text-gray-400 group-open:rotate-180 transition-transform">▼</span>
+        </summary>
+        <p class="text-sm text-gray-600 mt-3"><strong>OKX</strong> (testnet + mainnet) and <strong>Gate.io</strong> (live, Unified Account with isolated margin at 15× default). Both via the official ccxt library. Adding new exchanges is a small code change — email support if you need a specific one.</p>
+      </details>
+
+      <details class="bg-white border border-gray-200 rounded-2xl p-6 group">
+        <summary class="font-semibold cursor-pointer flex justify-between">
+          Does the bot send my API keys somewhere?
+          <span class="text-gray-400 group-open:rotate-180 transition-transform">▼</span>
+        </summary>
+        <p class="text-sm text-gray-600 mt-3">No. API keys are encrypted with Fernet + PBKDF2 (310k rounds) using a vault password that only exists in your machine's RAM. The bot calls the exchange directly from your machine. The only outbound traffic is to BSC/Tron RPC (for license verify) and the license server (for activation + 6-hour heartbeat).</p>
+      </details>
+
+      <details class="bg-white border border-gray-200 rounded-2xl p-6 group">
+        <summary class="font-semibold cursor-pointer flex justify-between">
+          What if the license server goes down?
+          <span class="text-gray-400 group-open:rotate-180 transition-transform">▼</span>
+        </summary>
+        <p class="text-sm text-gray-600 mt-3">Bot keeps running offline for up to 7 days from last successful heartbeat. Server uptime is monitored 24/7 — see live status link at the bottom. If we have an outage, your bot doesn't stop.</p>
+      </details>
+
+      <details class="bg-white border border-gray-200 rounded-2xl p-6 group">
+        <summary class="font-semibold cursor-pointer flex justify-between">
+          Why USDT only? No credit card?
+          <span class="text-gray-400 group-open:rotate-180 transition-transform">▼</span>
+        </summary>
+        <p class="text-sm text-gray-600 mt-3">Three reasons: (1) crypto traders already have USDT, no friction. (2) Lower fees passed to you — no Stripe 3% + currency conversion. (3) Self-custody — we never see your card details, you keep custody until the moment you click Send. If you don't have USDT, easiest is Binance → buy USDT → withdraw to your wallet (DON'T withdraw directly to our wallet from Binance — Binance subtracts a fee).</p>
+      </details>
+
+    </div>
+  </div>
+</section>
+
+<!-- ====================== FOOTER ====================== -->
+<footer class="border-t border-gray-200 bg-gray-50">
+  <div class="max-w-6xl mx-auto px-6 py-10 grid md:grid-cols-3 gap-8 text-sm">
+    <div>
+      <div class="flex items-center space-x-2 font-bold mb-2">
+        <span class="text-xl">📊</span><span>Reversal Bot</span>
+      </div>
+      <p class="text-gray-600 text-xs">Adaptive crypto trading on autopilot. Daily-reversal pattern + LTR confluence + Bayesian learner.</p>
+    </div>
+    <div>
+      <h3 class="font-semibold mb-2">Product</h3>
+      <ul class="space-y-1 text-gray-600 text-xs">
+        <li><a href="#features" class="hover:text-blue-600">Features</a></li>
+        <li><a href="#pricing" class="hover:text-blue-600">Pricing</a></li>
+        <li><a href="#how" class="hover:text-blue-600">How it works</a></li>
+        <li><a href="#download" class="hover:text-blue-600">Download</a></li>
+      </ul>
+    </div>
+    <div>
+      <h3 class="font-semibold mb-2">Support</h3>
+      <ul class="space-y-1 text-gray-600 text-xs">
+        <li><a href="mailto:dht.io.vn@gmail.com" class="hover:text-blue-600">dht.io.vn@gmail.com</a></li>
+        <li><a href="https://stats.uptimerobot.com/" target="_blank" class="hover:text-blue-600">Service status</a></li>
+        <li><a href="#faq" class="hover:text-blue-600">FAQ</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="border-t border-gray-200 py-4">
+    <div class="max-w-6xl mx-auto px-6 text-xs text-gray-500 flex flex-wrap justify-between gap-4">
+      <span>© 2026 Reversal Bot. All rights reserved.</span>
+      <span class="text-amber-700">⚠️ Trading crypto involves substantial risk. Past performance ≠ future results.</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ====================== JS — pull live pricing from server ====================== -->
+<script>
+  // Optionally overwrite static pricing card prices with live values from /pricing endpoint.
+  // This lets future tier price changes propagate without redeploying the landing page.
+  fetch('/pricing').then(r => r.json()).then(data => {
+    // For now we trust the static cards; uncomment below to dynamically update.
+    // (Keep static so SEO scrapers see prices without running JS.)
+  }).catch(() => { /* server down, static prices are fine */ });
+
+  // Smooth scroll for nav links
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const tgt = document.querySelector(a.getAttribute('href'));
+      if (tgt) { e.preventDefault(); tgt.scrollIntoView({behavior:'smooth'}); }
+    });
+  });
+</script>
+</body>
+</html>

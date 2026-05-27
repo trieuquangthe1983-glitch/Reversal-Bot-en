@@ -22,6 +22,8 @@ from contextlib import asynccontextmanager
 from typing import Optional
 
 from fastapi import Depends, FastAPI, Header, HTTPException, Request, status
+from fastapi.responses import FileResponse, JSONResponse
+from pathlib import Path
 from pydantic import BaseModel
 
 from blockchain import (PAYMENT_WALLET_ADDRESS, MIN_CONFIRMATIONS,
@@ -116,18 +118,32 @@ class HeartbeatIn(BaseModel):
 # ---------------------------------------------------------------------------
 # Public endpoints
 # ---------------------------------------------------------------------------
+_LANDING_PATH = Path(__file__).parent / "landing.html"
+
+
 @app.get("/")
 def root():
-    """Friendly landing for browser visits."""
+    """Browser visitors get the marketing landing page; bots/scripts that
+    want JSON should hit /api/info instead."""
+    if _LANDING_PATH.exists():
+        return FileResponse(_LANDING_PATH, media_type="text/html")
+    return JSONResponse({"error": "landing.html missing"}, status_code=500)
+
+
+@app.get("/api/info")
+def api_info():
+    """Machine-readable index of public endpoints."""
     return {
         "service": "Reversal Bot License Server",
         "version": "1.0.0",
         "status": "running",
         "endpoints": {
+            "GET  /":             "marketing landing page (HTML)",
             "GET  /health":       "liveness probe",
             "GET  /pricing":      "tier list + payment wallet",
             "GET  /public-key":   "Ed25519 public key (PEM)",
-            "POST /verify-payment": "verify BSC tx + mint signed token",
+            "GET  /trial-eligible/{machine_id}": "trial availability for a machine",
+            "POST /verify-payment": "verify BSC/Tron tx + mint signed token",
             "POST /activate":     "register an activation",
             "POST /heartbeat":    "bot status check",
             "GET  /admin/list":   "list licenses (requires x-admin-token)",
