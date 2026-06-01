@@ -7,7 +7,7 @@ services:
   license-server:
     build: .
     ports:
-      - "8090:8090"
+      - "8000:8000"
     environment:
       - LICENSE_STATE_DIR=/data/state
       - LICENSE_DB_PATH=/data/state/licenses.db

@@ -20,14 +20,14 @@ python scripts/generate_master_keys.py
 export LICENSE_ADMIN_TOKEN=$(python -c "import secrets; print(secrets.token_hex(32))")
 
 # Run server
-uvicorn app:app --reload --port 8090
+uvicorn app:app --reload --port 8000
 ```
 
 Test:
 ```bash
-curl http://localhost:8090/health
-curl http://localhost:8090/pricing
-curl http://localhost:8090/public-key
+curl http://localhost:8000/health
+curl http://localhost:8000/pricing
+curl http://localhost:8000/public-key
 ```
 
 ## Endpoints

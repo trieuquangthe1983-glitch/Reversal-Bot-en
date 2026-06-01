@@ -132,7 +132,7 @@ docker compose up -d
 
 # Cài nginx + Let's Encrypt cho HTTPS (quan trọng!)
 apt install -y nginx certbot python3-certbot-nginx
-# Edit /etc/nginx/sites-available/license với reverse proxy đến :8090
+# Edit /etc/nginx/sites-available/license với reverse proxy đến :8000
 certbot --nginx -d license.your-domain.com
 ```
 
@@ -164,13 +164,12 @@ python -m uvicorn app:app --reload
 
 # Terminal 2: chạy bot
 cd crypto-reversal-bot-en
-set LICENSE_SERVER_URL=http://localhost:8090
-# Bot UI sẽ chạy ở:
+set LICENSE_SERVER_URL=http://localhost:8000
 python scripts/run_web.py
 ```
 
 Sau đó:
-1. Mở `http://localhost:8788` (bot UI)
+1. Mở `http://localhost:8787` (bot UI)
 2. Click **💎 Pricing** → phải load tiers từ server local
 3. Click **🔑 Activate** → paste 1 tx_hash thật của anh (nếu có) hoặc skip để test phần khác
 4. Server log sẽ show request + tx verify
@@ -181,7 +180,7 @@ Sau đó:
 
 1. Customer download bot, chạy `python scripts/run_web.py`
 2. Họ click 💎 Pricing → thấy 5 tier
-3. Chuyển USDT-BEP20 đúng số tới ví `0xFdE5bE00bA5db63a93abf7922ee831dB62257550`
+3. Chuyển USDT-BEP20 đúng số tới ví `0x24d37a325fCD2fb91EA094cE7951cDB8e0F686c5`
 4. Đợi ~30 giây (12 confirmations)
 5. Copy tx hash từ bscscan.com
 6. Click 🔑 Activate trên bot UI

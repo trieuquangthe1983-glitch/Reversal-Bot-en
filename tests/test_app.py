@@ -45,7 +45,7 @@ class TestPublicEndpoints:
         assert r.status_code == 200
         j = r.json()
         assert len(j["tiers"]) == 5
-        assert j["payment"]["wallet"].lower().startswith("0xfde5be00")
+        assert j["payment"]["wallet"].lower().startswith("0x24d37a32")
         assert j["support_email"] == "dht.io.vn@gmail.com"
 
     def test_public_key(self, client):

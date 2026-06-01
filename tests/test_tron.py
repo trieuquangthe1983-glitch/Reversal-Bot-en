@@ -129,7 +129,7 @@ class TestPricingExposesBothNetworks:
         nets = {n["id"]: n for n in j["networks"]}
         assert "bsc" in nets
         assert "tron" in nets
-        assert nets["bsc"]["wallet"].lower().startswith("0xfde5")
+        assert nets["bsc"]["wallet"].lower().startswith("0x24d37a32")
         assert nets["tron"]["wallet"].startswith("TCXQ")
         assert "buyer pays" in j["fee_policy"].lower()
 

@@ -15,13 +15,17 @@ import requests
 from tiers import TIERS, Tier, match_tier_by_amount
 
 
+# Official Tether USDT BEP20 token contract on BSC (Binance-Peg BSC-USD).
+# This is FIXED — it is the token we watch Transfer events from. Do NOT set
+# this to your wallet; the wallet is PAYMENT_WALLET_ADDRESS below.
 USDT_BEP20_CONTRACT = "0x55d398326f99059fF775485246999027B3197955".lower()
 USDT_DECIMALS = 18
 TRANSFER_EVENT_TOPIC = "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"
 
+# YOUR receiving wallet (BEP20 / BSC). Override per-deploy via env if needed.
 PAYMENT_WALLET_ADDRESS = os.getenv(
     "LICENSE_PAYMENT_WALLET",
-    "0xFdE5bE00bA5db63a93abf7922ee831dB62257550",
+    "0x24d37a325fCD2fb91EA094cE7951cDB8e0F686c5",
 ).lower()
 
 DEFAULT_RPCS = [
