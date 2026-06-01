@@ -130,7 +130,7 @@ class TestPricingExposesBothNetworks:
         assert "bsc" in nets
         assert "tron" in nets
         assert nets["bsc"]["wallet"].lower().startswith("0x24d37a32")
-        assert nets["tron"]["wallet"].startswith("TCXQ")
+        assert nets["tron"]["wallet"].startswith("TDKv")
         assert "buyer pays" in j["fee_policy"].lower()
 
 
@@ -146,7 +146,7 @@ class TestVerifyPaymentDispatch:
         tron_proof = TronPaymentProof(
             tx_hash="a" * 64,
             from_address="TX" + "x" * 32,
-            to_address="TCXQjLBqE79ALwzMSXneQXUHtyymDTXapt",
+            to_address="TDKvfffbFYaznVH7wkin6vuw7NH47LwQJz",
             amount_usdt=29.0,
             block_number=1_000_000,
             confirmations=25,
